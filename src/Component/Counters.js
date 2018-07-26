@@ -4,47 +4,27 @@ import {Button} from 'reactstrap';
 
 class Counters extends Component {
 
-    state = {
-        counters: [
-            {id: 1, name: 'Coca Cola', value: 4},
-            {id: 2, name: 'Pepsi Cola', value: 0},
-            {id: 3, name: 'Coca Zero', value: 0},
-            {id: 4, name: 'Seven Up', value: 0}
-        ]
-    };
-
-    resetBtnStyle = {
-      marginTop: '1rem'
-    };
-
-    handleDelete = (counterId) => {
-        const counters = this.state.counters.filter(c => c.id !== counterId);
-        this.setState({ counters });
-    };
-
-    handleReset = () => {
-      const counters = [];
-      this.state.counters.forEach(counter => {
-          counter.value = 0;
-          counters.push(counter);
-      });
-      this.setState({ counters });
-    };
-
     render() {
+        /* Object destructuring (to not use 'this.props.' */
+        const { onReset, counters, onDelete, onIncrement, onDecrement } = this.props;
+
         return (
             <div style={this.resetBtnStyle}>
-                <Button onClick={this.handleReset}
+                <Button onClick={onReset}
                         color="info">
                     Reset all counters
                 </Button>
-                {this.state.counters.map(counter =>
+                {/* For each product, display it */}
+                {counters.map(counter =>
                     <Counter key={counter.id}
                              counter={counter}
-                             onDelete={this.handleDelete}>
+                             onDelete={onDelete}
+                             onIncrement={onIncrement}
+                             onDecrement={onDecrement}>
                         <span className="m-2">{counter.name}</span>
                     </Counter>
                 )}
+
             </div>
         );
     }

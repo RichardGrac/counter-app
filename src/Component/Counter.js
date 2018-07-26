@@ -4,20 +4,16 @@ import {Button} from 'reactstrap';
 
 class Counter extends Component {
 
-    state = {
-        value: this.props.counter.value
-        // , tags: ["tag1", "tag2", "tag3"]
-    };
+    /* Example about How we could get new Data from an API if any component props changed */
+    // componentDidUpdate(prevProps, prevState) {
+    //     if (prevProps.counter.value !== this.props.counter.value) {
+    //        Ajax call and get new data from the server
+    //     }
+    // }
 
-    /* Arrow function */
-    handleIncrement = () => {
-        this.setState({ value: this.state.value + 1 });
-    };
-
-    handleDecrement = () => {
-        if (this.state.value === 0) return;
-        this.setState({ value: this.state.value - 1 });
-    };
+    componentWillUnmount() {
+        console.log('App - Component (#' + this.props.counter.id + ') Will Unmount');
+    }
 
     /* Render of a View */
     render() {
@@ -30,37 +26,24 @@ class Counter extends Component {
                 {/*Display of the product name*/}
                 {this.props.children}
 
-                <Button onClick={this.handleIncrement} className="m-1" color="secondary">+</Button>
-                <Button onClick={this.handleDecrement} className="m-1" color="secondary">-</Button>
+                <Button onClick={() => this.props.onIncrement(this.props.counter)} className="m-1" color="secondary">+</Button>
+                <Button onClick={() => this.props.onDecrement(this.props.counter)} className="m-1" color="secondary">-</Button>
                 <Button onClick={() => this.props.onDelete(this.props.counter.id)} color="danger">Delete</Button>
-                {/*<p>*/}
-                {/*{this.renderTags()}*/}
-                {/*</p>*/}
             </div>
         );
     }
 
     /* It'll display in the Badge the value */
     formatCount() {
-        let counter = this.state.value;
+        let counter = this.props.counter.value;
         return counter === 0 ? 'Zero' : counter;
     }
 
     getBadgeColor() {
         let badgeColor = "";
-        badgeColor += this.state.value === 0 ? "warning" : "primary";
+        badgeColor += this.props.counter.value === 0 ? "warning" : "primary";
         return badgeColor;
     }
-
-    /* To list Render a <ul> with map() */
-    // renderTags() {
-    //     if (this.state.tags.length === 0) return <p>There are no tags!</p>
-    //     return <ul className="list-unstyled">
-    //         {this.state.tags.map(tag =>
-    //             <li key={tag}>{tag}</li>
-    //         )}
-    //     </ul>
-    // }
 }
 
 export default Counter;
