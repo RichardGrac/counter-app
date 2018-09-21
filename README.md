@@ -1,5 +1,5 @@
-#### Description: 
-Testing ReactJS with Bootstrap (Reacstrap)
+### Available at:
+https://hidden-oasis-31158.herokuapp.com/
 
 ## How to Run it
 In the project directory, you can run:
